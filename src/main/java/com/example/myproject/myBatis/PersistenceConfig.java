@@ -1,4 +1,4 @@
-package com.example.myproject;
+package com.example.myproject.myBatis;
 
 import oracle.jdbc.pool.OracleDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -11,9 +11,8 @@ import org.springframework.context.annotation.Primary;
 import javax.sql.DataSource;
 import java.sql.SQLException;
 
-//
 @Configuration
-@MapperScan("com.example.myproject")
+@MapperScan("com.example.myproject.myBatis")
 public class PersistenceConfig {
 
     @Bean(name = "dataSource")

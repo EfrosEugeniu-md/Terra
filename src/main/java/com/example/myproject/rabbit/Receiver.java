@@ -1,11 +1,13 @@
-package com.example.myproject;
+package com.example.myproject.rabbit;
 
-import java.io.UnsupportedEncodingException;
 import java.util.concurrent.CountDownLatch;
 
+import com.example.myproject.myBatis.Article;
+import com.example.myproject.myBatis.ArticleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.util.SerializationUtils;
+
+import static org.springframework.util.SerializationUtils.deserialize;
 
 @Component
 public class Receiver {
@@ -13,11 +15,9 @@ public class Receiver {
     ArticleMapper articleMapper;
     private CountDownLatch latch = new CountDownLatch(1);
 
-    public void receiveMessage(byte[] body) throws UnsupportedEncodingException {
-
-        Article object = (Article) SerializationUtils.deserialize(body);
+    public void receiveMessage(byte[] body) {
+        Article object = (Article) deserialize(body);
         articleMapper.insert(object);
-
         latch.countDown();
     }
 

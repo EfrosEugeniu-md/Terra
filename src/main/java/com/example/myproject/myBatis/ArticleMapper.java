@@ -1,4 +1,4 @@
-package com.example.myproject;
+package com.example.myproject.myBatis;
 
 import org.apache.ibatis.annotations.*;
 
