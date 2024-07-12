@@ -1,13 +1,17 @@
-package com.example.myproject;
+package com.example.myproject.rabbit;
 
 import java.util.concurrent.TimeUnit;
 
 
+import com.example.myproject.MyProjectApplication;
+import com.example.myproject.myBatis.Article;
+import com.example.myproject.myBatis.ArticleMapper;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import static com.example.myproject.rabbit.RabbitConfig.topicExchangeName;
 import static org.springframework.util.SerializationUtils.serialize;
 
 @Component
@@ -33,7 +37,7 @@ public class Runner implements CommandLineRunner {
             Article article1 = new Article("title" + i, "author" + i);
 
             byte[] data = serialize(article1);
-            rabbitTemplate.convertAndSend(MyProjectApplication.topicExchangeName, "foo.bar.baz", data);
+            rabbitTemplate.convertAndSend(topicExchangeName, "foo.bar.baz", data);
         }
 
         receiver.getLatch().await(1000, TimeUnit.MILLISECONDS);
