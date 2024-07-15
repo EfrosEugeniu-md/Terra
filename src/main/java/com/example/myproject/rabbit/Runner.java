@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import static com.example.myproject.rabbit.RabbitConfig.topicExchangeName;
 import static org.springframework.util.SerializationUtils.serialize;
 
 @Component
@@ -37,7 +36,7 @@ public class Runner implements CommandLineRunner {
             Article article1 = new Article("title" + i, "author" + i);
 
             byte[] data = serialize(article1);
-            rabbitTemplate.convertAndSend(topicExchangeName, "foo.bar.baz", data);
+            rabbitTemplate.convertAndSend("spring-boot-exchange", "foo.bar.baz", data);
         }
 
         receiver.getLatch().await(1000, TimeUnit.MILLISECONDS);
